@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
     <!-- content delivery network (CDN) -->
     <link
       rel="stylesheet"
@@ -29,44 +33,83 @@
           >
         </p>
       </div>
-      <!-- Mars News -->
+      <!-- Row Latest News -->
       <div class="row" id="mars-news">
         <div class="col-md-12">
           <div class="media">
             <div class="media-body">
-              <h2>Latest Mars News</h2>
-              <h4 class="media-heading">{{mars.news_title}}</h4>
-              <p>{{ mars.news_paragraph }}</p>
-              <!-- Mars Featured Image -->
-              <!-- First level -->
-              <div class="row" id="mars-featured-image">
-                <!-- Featured Image -->
-                <div class="col-md-8">
-                  <h2>Featured Mars Image</h2>
+              <h2 class="page-header">Latest News</h2>
+              <div class="row">
+                <div class="col-md-4">
                   <img
-                    src="{{ mars.featured_image }}"
+                    src="{{ mars.news_image }}"
                     class="img-responsive"
                     alt="Responsive image"
                   />
                 </div>
-                <!-- Mars Facts -->
-                <div class="col-md-4">
-                  <div class="row" id="mars-facts">
-                    <h4>Mars Facts</h4>
-                    {{ mars.facts | safe }}
-                    <!--
-                      The line{{ mars.facts | safe }} accomplishes two tasks: 
-                      it first references the facts table in the mars document, 
-                      and it also tells the web browser that this code doesn't contain anything malicious. 
-                      See the official Template Designer Documentation page for more information:
-                      https://jinja.palletsprojects.com/en/2.11.x/templates/?highlight=automatic%20escaping#working-with-automatic-escaping
-                    -->
-                  </div>
+                <div class="col-md-8">
+                  <h3 class="media-heading">{{mars.news_title}}</h3>
+                  <p>{{ mars.news_paragraph }}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <!-- Row Featured Image and Facts-->
+      <div class="row" id="mars-featured-image-and-fact">
+        <!-- Col Featured Image -->
+        <div class="col-md-8" id="mars-featured-image">
+          <h2 class="page-header">Featured Mars Image</h2>
+          <img
+            src="{{ mars.featured_image }}"
+            class="img-responsive"
+            alt="Responsive image"
+          />
+          <div class="caption">
+            <p>{{ mars.featured_image_title }}</p>
+          </div>
+        </div>
+        <!-- Col Mars Facts -->
+        <div class="col-md-4" id="mars-facts">
+          <h2 class="page-header">Mars Facts</h2>
+
+          {{ mars.facts | safe }}
+
+          <!--
+              The line  mars.facts | safe  accomplishes two tasks: 
+              it first references the facts table in the mars document, 
+              and it also tells the web browser that this code doesn't contain anything malicious. 
+              See the official Template Designer Documentation page for more information:
+              https://jinja.palletsprojects.com/en/2.11.x/templates/?highlight=automatic%20escaping#working-with-automatic-escaping
+            -->
+        </div>
+      </div>
+      <!-- Row hemispheres title-->
+      <div class="row" id="hemispheres-title">
+        <div class="col-md-12">
+          <h2 class="page-header">Mars Hemispheres</h2>
+        </div>
+      </div>
+      <!-- Row hemispheres images-->
+      <div class="row" id="hemispheres-images">
+        {% for hemisphere in mars.hemispheres %}
+        <!-- Cols hemispheres-->
+        <div class="col-md-3">
+          <div class="thumbnail">
+            <a href="{{ hemisphere.img_url }}">
+              <img
+                src="{{ hemisphere.img_url }}"
+                class="img-responsive"
+                alt="Responsive image"
+              />
+              <div class="caption">
+                <p>{{hemisphere.title}}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </body>
